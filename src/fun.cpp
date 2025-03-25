@@ -41,24 +41,19 @@ unsigned int faStr2(const char* str) {
     return count + (inWord && valid);
 }
 
-unsigned int faStr3(const char *str) {
-    int totalLetters = 0;
-    int wordCount = 0;
+unsigned int faStr3(const char* str) {
+    int letters = 0, words = 0;
     bool inWord = false;
-    for (; *str != '\0'; ++str) {
+
+    for (; *str; ++str) {
         if (isspace(*str)) {
             inWord = false;
         } else {
-            if (!inWord) {
-                ++wordCount;
-                inWord = true;
-            }
-            ++totalLetters;
+            letters++;
+            words += !inWord;
+            inWord = true;
         }
     }
-    if (wordCount == 0) {
-        return 0;
-    }
-    double average = static_cast<double>(totalLetters) / wordCount;
-    return static_cast<unsigned int>(round(average));
+
+    return words ? static_cast<unsigned int>(round(letters * 1.0 / words)) : 0;
 }
