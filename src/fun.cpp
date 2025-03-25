@@ -7,37 +7,26 @@ unsigned int faStr1(const char *str) {
     unsigned int count = 0;
     bool inWord = false;
     bool hasDigits = false;
-
-    for (int i = 0; str[i] != '\0'; ++i) {
-        if (isspace(str[i])) {
-            if (inWord && !hasDigits) {
-                ++count;
-            }
-            inWord = false;
-            hasDigits = false;
+    
+    for (; *str; ++str) {
+        if (isspace(*str)) {
+            count += inWord && !hasDigits;
+            inWord = hasDigits = false;
         } else {
             if (!inWord) {
                 inWord = true;
                 hasDigits = false;
             }
-            if (isdigit(str[i])) {
-                hasDigits = true;
-            }
+            hasDigits |= isdigit(*str);
         }
     }
-
-    if (inWord && !hasDigits) {
-        ++count;
-    }
-
-    return count;
+    return count + (inWord && !hasDigits);
 }
 
 unsigned int faStr2(const char *str) {
     unsigned int count = 0;
     bool inWord = false;
     bool isValidWord = false;
-
     for (; *str != '\0'; ++str) {
         if (!inWord) {
             if (isupper(*str)) {
@@ -58,11 +47,9 @@ unsigned int faStr2(const char *str) {
             }
         }
     }
-
     if (inWord && isValidWord) {
         ++count;
     }
-
     return count;
 }
 
@@ -70,7 +57,6 @@ unsigned int faStr3(const char *str) {
     int totalLetters = 0;
     int wordCount = 0;
     bool inWord = false;
-
     for (; *str != '\0'; ++str) {
         if (isspace(*str)) {
             inWord = false;
@@ -82,11 +68,9 @@ unsigned int faStr3(const char *str) {
             ++totalLetters;
         }
     }
-
     if (wordCount == 0) {
         return 0;
     }
-
     double average = static_cast<double>(totalLetters) / wordCount;
     return static_cast<unsigned int>(round(average));
 }
