@@ -23,34 +23,22 @@ unsigned int faStr1(const char *str) {
     return count + (inWord && !hasDigits);
 }
 
-unsigned int faStr2(const char *str) {
+unsigned int faStr2(const char* str) {
     unsigned int count = 0;
-    bool inWord = false;
-    bool isValidWord = false;
-    for (; *str != '\0'; ++str) {
-        if (!inWord) {
-            if (isupper(*str)) {
-                inWord = true;
-                isValidWord = true;
-            } else if (isalpha(*str)) {
-                inWord = true;
-                isValidWord = false;
-            }
-        } else {
-            if (isspace(*str)) {
-                inWord = false;
-                if (isValidWord) {
-                    ++count;
-                }
-            } else if (!islower(*str)) {
-                isValidWord = false;
-            }
+    bool inWord = false, valid = false;
+
+    for (; *str; ++str) {
+        if (isspace(*str)) {
+            count += inWord && valid;
+            inWord = valid = false;
+        } else if (!inWord) {
+            inWord = true;
+            valid = isupper(*str);
+        } else if (!islower(*str)) {
+            valid = false;
         }
     }
-    if (inWord && isValidWord) {
-        ++count;
-    }
-    return count;
+    return count + (inWord && valid);
 }
 
 unsigned int faStr3(const char *str) {
