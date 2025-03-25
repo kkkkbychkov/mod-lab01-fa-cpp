@@ -7,7 +7,6 @@ unsigned int faStr1(const char *str) {
     unsigned int count = 0;
     bool inWord = false;
     bool hasDigits = false;
-    
     for (; *str; ++str) {
         if (isspace(*str)) {
             count += inWord && !hasDigits;
@@ -26,7 +25,6 @@ unsigned int faStr1(const char *str) {
 unsigned int faStr2(const char* str) {
     unsigned int count = 0;
     bool inWord = false, valid = false;
-
     for (; *str; ++str) {
         if (isspace(*str)) {
             count += inWord && valid;
@@ -44,7 +42,6 @@ unsigned int faStr2(const char* str) {
 unsigned int faStr3(const char* str) {
     int letters = 0, words = 0;
     bool inWord = false;
-
     for (; *str; ++str) {
         if (isspace(*str)) {
             inWord = false;
@@ -54,6 +51,5 @@ unsigned int faStr3(const char* str) {
             inWord = true;
         }
     }
-
     return words ? static_cast<unsigned int>(round(letters * 1.0 / words)) : 0;
 }
